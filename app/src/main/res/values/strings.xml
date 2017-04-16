@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">UiHints</string>
+    <string name="show">show hints</string>
+    <string name="open">open new window</string>
+    <string name="first">first</string>
+    <string name="test_text">text</string>
+    <string name="show_add_hint">show additional hints</string>
+
+    <string name="hint_title_start_flow">Start flow</string>
+    <string name="hint_message_start_flow">Hello, you want to get training on the application</string>
+
+    <string name="hint_title_start_second_window">Start second window</string>
+    <string name="hint_message_start_second_window">This button is needed to</string>
+
+    <string name="hint_title_first_hint">First Hint</string>
+    <string name="hint_message_first_hint">Hello, you see new window. This first hint at this window</string>
+
+    <string name="hint_title_additional">Additional</string>
+    <string name="hint_message_additional">This button is needed to</string>
+
+    <string name="hint_title_test_text">Test</string>
+    <string name="hint_message_test_text">This button is needed to</string>
+
+    <string name="hint_title_finish_flow">Finish flow</string>
+    <string name="hint_message_finish_flow">Bye!</string>
+</resources>

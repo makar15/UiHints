@@ -1,0 +1,108 @@
+1) Теория:
+Target - это ваша цель, то есть какой либо view элемент находящийся на экране.
+Имеено о targets, вы и будите рассказывать пользователю, подсвечивая его.
+Target можно подсветить в двух форматах (ShadowView.Type): CIRCLE и RECTANGLE.
+(привести примеры типов в картинках для понимания)
+
+
+Hint - для вас как для users это всего лишь String, которую вы сами определяете и подразумевается
+что эта строка говорит о ващей target.
+Но в целом это еще и ui элемент (далее будем называть HintView),
+то есть сама подсказка с заголовком, сообщением, и кнопкой.
+Может быть двух типов (HintViewType): SELECTION or STANDARD.
+(привести примеры типов в картинках для понимания)
+
+
+2) Предоставялемые для работы Классы:
+UiHintsViewController - класс управляющий показом HintView элементов и изменением цели.
+constructor:
+        - UiHintsViewController(Context context, FullscreenDetector fullscreenDetector)
+public methods:
+        - show() - .
+        - showWithAnimation() - .
+        - isShown() - .
+        - hide() - .
+        - changeTarget(@Nullable HintContainerLayout hint, HintParams params) - .
+        - removeTargets(@Nullable Runnable postAction) - .
+
+
+HintsStorage - это хранилище view target которые нужно подсветить.
+public enum StorageEvent:
+        - ADDED, REMOVED, REMOVED_ALL
+public interface:
+        - HintsStorageListener with method:
+            - onStorageEvent(StorageEvent event, @Nullable @Hint String hint) - hint будет = null,
+            только на событие REMOVED_ALL.
+public methods:
+        - addHint(@Hint String hint, ...) - .
+        - removeHint(@Hint String hint) - .
+        - removeAllHints() - .
+        - hasHint(@Hint String hint) - .
+        - isEmpty() - .
+        - getHint(@Hint String hint) - .
+        - addListener(HintsStorageListener listener) - .
+        - removeListener(HintsStorageListener listener) - .
+
+
+HintParams - это класс хранящий наборы параметров с информацией расположения и внешнего вида HintView.
+fields:
+        - final @HintViewType int hintViewType - .
+        - WeakReference<View> mTarget - слабая ссылка на цель.
+        - ShadowView.Type shadowType - .
+        - ViewGroup.LayoutParams mLayoutParams - .
+public methods:
+        - getHintViewType() - .
+        - getShadowType() - .
+        - @Nullable getTarget() - .
+        - @Nullable getLayoutParams() - .
+
+
+HintsItemFactory - .
+constructor:
+        - HintsItemFactory(Context context)
+public methods:
+        - createHintView(View.OnClickListener listener, @Hint String hint, HintParams params) - .
+        - static FrameLayout.LayoutParams getCenterParams(Context context) - .
+
+
+Так же есть еще другие Manager и Utils классы такие как например:
+
+FullscreenDetector - utils для контроля над изменением элементов экрана.
+constructor:
+        - FullscreenDetector(Context context, final DisplayInfo displayInfo)
+public interface:
+        - FullscreenStateListener with method:
+            - onChanged()- .
+public methods:
+        - onCreate() - .
+        - onDestroy() - .
+        - addListener(FullscreenStateListener listener);
+        - removeListener(FullscreenStateListener listener);
+        - static boolean isFullscreen() - .
+
+
+DisplayInfo - класс помощник для FullscreenDetector,
+от него и будет FullscreenDetector получать актуальную высоту и ширину экрана.
+constructor:
+        - DisplayInfo(Context context);
+public methods:
+        - getWidth();
+        - getHeight();
+
+
+BitmapUtils with public methods:
+        - static Bitmap getRotateBitmap(Bitmap bitmap, float angle);
+
+UIUtils with public methods:
+        - static int getScreenHeight();
+        - static int getScreenWidth();
+        - static float getStatusBarHeight(Context context);
+        - @Nullable static String getStringResourceByName(Context context, String name);
+        - static LayoutTransition getAppearingLayoutTransition();
+
+,которыми вы можете пользовать для своих целей
+
+
+3) Практика:
+классы для использования:
+        UiHintsViewController, HintParams, HintsItemFactory, HintsStorage

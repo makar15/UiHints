@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/selection_hint"
+    style="@style/HintButtonsLayout"
+    android:paddingBottom="3dp">
+
+    <TextView
+        android:id="@+id/no"
+        style="@style/DeviceHintButton"
+        android:background="@drawable/wizard_button_red"
+        android:text="@string/wizard_start_no_btn" />
+
+    <TextView
+        android:id="@+id/yes"
+        style="@style/DeviceHintButton"
+        android:background="@drawable/wizard_button_green"
+        android:layout_marginLeft="33dp"
+        android:text="@string/wizard_start_yes_btn" />
+</LinearLayout>

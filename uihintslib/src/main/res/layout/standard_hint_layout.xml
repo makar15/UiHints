@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/standard_hint"
+    style="@style/HintButtonsLayout"
+    android:paddingBottom="3dp">
+
+    <TextView
+        android:id="@+id/got_it"
+        style="@style/DeviceHintButton"
+        android:background="@drawable/wizard_button_green"
+        android:text="@string/wizard_got_it_btn" />
+</RelativeLayout>

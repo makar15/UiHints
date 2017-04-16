@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<codes.evolution.uihintslib.ui.HintContainerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/hint_container_width"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/hint_fields_layout"
+        style="@style/DeviceLinearHintContainer">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/DeviceViewsHintContainer"
+            android:textSize="@dimen/hint_title" />
+
+        <TextView
+            android:id="@+id/message"
+            style="@style/DeviceViewsHintContainer"
+            android:layout_marginBottom="8dp"
+            android:textSize="@dimen/hint_message" />
+    </LinearLayout>
+</codes.evolution.uihintslib.ui.HintContainerLayout>
