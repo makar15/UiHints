@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -18,15 +19,17 @@ import junit.framework.Assert;
 import java.util.HashMap;
 import java.util.Map;
 
-import codes.evolution.uihintslib.Constants;
+import codes.evolution.uihintslib.AnimateSettings;
 import codes.evolution.uihintslib.R;
 import codes.evolution.uihintslib.ui.utils.AnimatorUtils;
 import codes.evolution.uihintslib.ui.utils.UIUtils;
 
 public class DecoratedHintsLayout extends FrameLayout {
 
+    private static final String TAG = "DecoratedHintsLayout";
+
     private final ShadowView mShadowView;
-    private final Map<HintParams, HintContainerLayout> mHints = new HashMap<>();
+    private final Map<HintParams, View> mHints = new HashMap<>();
 
     protected DecoratedHintsLayout(Context context) {
         this(context, null);
@@ -50,9 +53,9 @@ public class DecoratedHintsLayout extends FrameLayout {
     protected void relayoutLastHint() {
         Assert.assertTrue("Don't supports many hints", mHints.size() <= 1);
         removeAllHintViews(false);
-        for (Map.Entry<HintParams, HintContainerLayout> entry : mHints.entrySet()) {
+        for (Map.Entry<HintParams, View> entry : mHints.entrySet()) {
             HintParams hintParams = entry.getKey();
-            HintContainerLayout hint = entry.getValue();
+            View hint = entry.getValue();
             showHint(hint, hintParams);
         }
     }
@@ -63,7 +66,7 @@ public class DecoratedHintsLayout extends FrameLayout {
         mShadowView.hide(postAction);
     }
 
-    protected void changeTarget(@Nullable final HintContainerLayout hint, final HintParams params) {
+    protected void changeTarget(@Nullable final View hint, final HintParams params) {
         if (params == null) {
             Assert.fail("Object params is null");
             return;
@@ -82,14 +85,14 @@ public class DecoratedHintsLayout extends FrameLayout {
         }
 
         Assert.assertTrue("Don't supports many hints", mHints.size() <= 1);
-        for (Map.Entry<HintParams, HintContainerLayout> entry : mHints.entrySet()) {
+        for (Map.Entry<HintParams, View> entry : mHints.entrySet()) {
             HintParams hintParams = entry.getKey();
-            HintContainerLayout hint = entry.getValue();
+            View hint = entry.getValue();
             measureHint(hint, hintParams);
         }
     }
 
-    private void showHint(@Nullable final HintContainerLayout hint, final HintParams params){
+    private void showHint(@Nullable final View hint, final HintParams params){
         mShadowView.hide(new Runnable() {
             @Override
             public void run() {
@@ -125,8 +128,7 @@ public class DecoratedHintsLayout extends FrameLayout {
         return new FrameLayout.LayoutParams(width, LayoutParams.WRAP_CONTENT);
     }
 
-    private void measureHint(HintContainerLayout hint, HintParams hintParams) {
-
+    private void measureHint(View hint, HintParams hintParams) {
         if (hintParams.isType(HintParams.Params.LAYOUT_PARAMS) || hint == null) {
             return;
         }
@@ -191,12 +193,16 @@ public class DecoratedHintsLayout extends FrameLayout {
                 break;
         }
 
-        hint.setTriangleLocation(coordinates, resultLocation);
+        if (hint instanceof HintShapeLocator) {
+            ((HintShapeLocator) hint).setShapeLocation(coordinates, resultLocation);
+        } else {
+            Log.d(TAG, "Your hint view not implement interface HintShapeLocator");
+        }
     }
 
     private void setupAnimation() {
         LayoutTransition transition = UIUtils.getAppearingLayoutTransition();
-        transition.setDuration(LayoutTransition.APPEARING, Constants.HINTS_SHOW_ANIMATION_DURATION);
+        transition.setDuration(LayoutTransition.APPEARING, AnimateSettings.getHintsShowAnimationDuration());
         transition.addTransitionListener(new LayoutTransition.TransitionListener() {
             @Override
             public void startTransition(LayoutTransition transition, ViewGroup container, View view,
@@ -227,7 +233,7 @@ public class DecoratedHintsLayout extends FrameLayout {
     }
 
     private void removeAllHintViews(boolean withAnimation) {
-        for (Map.Entry<HintParams, HintContainerLayout> entry : mHints.entrySet()) {
+        for (Map.Entry<HintParams, View> entry : mHints.entrySet()) {
             if (withAnimation) {
                 removeHintWithAnimation(entry.getValue());
             } else {
@@ -238,7 +244,7 @@ public class DecoratedHintsLayout extends FrameLayout {
 
     private void removeHintWithAnimation(final View hint) {
         ValueAnimator animator = ObjectAnimator.ofFloat(hint, View.ALPHA, 1f, 0f);
-        animator.setDuration(Constants.HINTS_HIDE_ANIMATION_DURATION);
+        animator.setDuration(AnimateSettings.getHintsHideAnimationDuration());
         animator.addListener(new AnimatorUtils.SimpleAnimatorListener() {
 
             @Override

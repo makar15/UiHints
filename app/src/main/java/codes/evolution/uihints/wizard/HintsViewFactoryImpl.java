@@ -1,4 +1,4 @@
-package codes.evolution.uihintslib;
+package codes.evolution.uihints.wizard;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import codes.evolution.uihintslib.ui.HintContainerLayout;
-import codes.evolution.uihintslib.ui.HintParams;
+import codes.evolution.uihints.R;
+import codes.evolution.uihints.wizard.ui.HintContainerLayout;
+import codes.evolution.uihintslib.Hint;
+import codes.evolution.uihintslib.ui.HintsViewFactory;
 import codes.evolution.uihintslib.ui.utils.UIUtils;
 
-public class HintsItemFactory {
+public class HintsViewFactoryImpl implements HintsViewFactory<HintViewTypeParams> {
 
     private static final String TITLE_PREF = "hint_title_";
     private static final String MESSAGE_PREF = "hint_message_";
@@ -20,45 +22,51 @@ public class HintsItemFactory {
     private final Context mContext;
     private final LayoutInflater mInflater;
 
-    public HintsItemFactory(Context context) {
+    public HintsViewFactoryImpl(Context context) {
         mContext = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public HintContainerLayout createHintView(View.OnClickListener listener, @Hint.HintName String hint,
-                                              HintParams params) {
-        HintContainerLayout viewHint = (HintContainerLayout) mInflater.inflate(R.layout.hint_view, null, false);
-        ViewGroup hintContainer = (ViewGroup) viewHint.findViewById(R.id.hint_fields_layout);
+    @Override
+    public View createHintView(@Hint.Name String hintName,
+                               HintViewTypeParams params) {
+        HintContainerLayout hintView = (HintContainerLayout) mInflater.inflate(R.layout.hint_view, null, false);
+        ViewGroup hintContainer = (ViewGroup) hintView.findViewById(R.id.hint_fields_layout);
         TextView title = (TextView) hintContainer.findViewById(R.id.title);
-        setHintTextFromResources(title, TITLE_PREF + hint);
+        setHintTextFromResources(title, TITLE_PREF + hintName);
         TextView message = (TextView) hintContainer.findViewById(R.id.message);
-        setHintTextFromResources(message, MESSAGE_PREF + hint);
+        setHintTextFromResources(message, MESSAGE_PREF + hintName);
 
         switch (params.getHintViewType()) {
             case HintViewType.SELECTION:
-                initSelectionHint(hintContainer, listener);
+                initSelectionHintView(hintContainer, params.getHintViewListener());
                 break;
             case HintViewType.STANDARD:
-            default:
-                initStandardHint(hintContainer, listener);
+            default: initStandardHintView(hintContainer, params.getHintViewListener());
         }
-        return viewHint;
+        return hintView;
     }
 
-    private void initStandardHint(ViewGroup hintContainer, View.OnClickListener listener) {
-        View viewStandard = mInflater.inflate(R.layout.standard_hint_layout, null);
-        hintContainer.addView(viewStandard);
+    private void initStandardHintView(ViewGroup hintContainer,
+                                      View.OnClickListener listener) {
+        View viewStandard = addViewToContainer(R.layout.standard_hint_layout, hintContainer);
         TextView btnGotIt = (TextView) viewStandard.findViewById(R.id.got_it);
         btnGotIt.setOnClickListener(listener);
     }
 
-    private void initSelectionHint(ViewGroup hintContainer, View.OnClickListener listener) {
-        View viewSelection = mInflater.inflate(R.layout.selection_hint_layout, null);
-        hintContainer.addView(viewSelection);
+    private void initSelectionHintView(ViewGroup hintContainer,
+                                       View.OnClickListener listener) {
+        View viewSelection = addViewToContainer(R.layout.selection_hint_layout, hintContainer);
         TextView btnYes = (TextView) viewSelection.findViewById(R.id.yes);
         TextView btnNo = (TextView) viewSelection.findViewById(R.id.no);
         btnYes.setOnClickListener(listener);
         btnNo.setOnClickListener(listener);
+    }
+
+    private View addViewToContainer(int resource, ViewGroup hintContainer) {
+        View view = mInflater.inflate(resource, null);
+        hintContainer.addView(view);
+        return view;
     }
 
     private void setHintTextFromResources(TextView textView, String hint) {
@@ -68,7 +76,7 @@ public class HintsItemFactory {
     public static FrameLayout.LayoutParams getCenterParams(Context context) {
         int screenWidth = UIUtils.getScreenWidth();
         int defaultWidth = context.getResources().getDimensionPixelSize(R.dimen.hint_container_width);
-        boolean isTablet = context.getResources().getBoolean(R.bool.is_tablet);
+        boolean isTablet = context.getResources().getBoolean(codes.evolution.uihintslib.R.bool.is_tablet);
 
         int width = isTablet ? (defaultWidth * 2) : screenWidth;
         return new FrameLayout.LayoutParams(width, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER);

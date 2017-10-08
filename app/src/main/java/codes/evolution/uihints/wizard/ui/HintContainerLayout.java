@@ -1,4 +1,4 @@
-package codes.evolution.uihintslib.ui;
+package codes.evolution.uihints.wizard.ui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,10 +9,12 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import codes.evolution.uihintslib.R;
+import codes.evolution.uihints.R;
+import codes.evolution.uihintslib.ui.HintShapeLocator;
+import codes.evolution.uihintslib.ui.SideLocation;
 import codes.evolution.uihintslib.ui.utils.BitmapUtils;
 
-public class HintContainerLayout extends FrameLayout {
+public class HintContainerLayout extends FrameLayout implements HintShapeLocator {
 
     private static final String TAG = "HintContainerLayout";
     private static final int STATE_EMPTY_TARGET = -1;
@@ -39,7 +41,6 @@ public class HintContainerLayout extends FrameLayout {
     public HintContainerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        // TODO set method for : TriangleBitmap and color RectangleDrawable
         mTriangleBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.wizard_triangle);
         mTriangleWidth = mTriangleBitmap.getWidth();
         mTriangleHeight = mTriangleBitmap.getHeight();
@@ -60,7 +61,8 @@ public class HintContainerLayout extends FrameLayout {
         mParams.setMargins((int) mLeftPointTriangle, (int) mTopPointTriangle, 0, 0);
     }
 
-    protected void setTriangleLocation(RectF coordinatesTarget, @SideLocation int locationHint) {
+    @Override
+    public void setShapeLocation(RectF coordinatesTarget, @SideLocation int locationHint) {
         if (coordinatesTarget.isEmpty()) {
             return;
         }

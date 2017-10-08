@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<codes.evolution.uihintslib.ui.HintContainerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<codes.evolution.uihints.wizard.ui.HintContainerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/hint_container_width"
     android:layout_height="wrap_content">
 
@@ -18,4 +18,4 @@
             android:layout_marginBottom="8dp"
             android:textSize="@dimen/hint_message" />
     </LinearLayout>
-</codes.evolution.uihintslib.ui.HintContainerLayout>
+</codes.evolution.uihints.wizard.ui.HintContainerLayout>

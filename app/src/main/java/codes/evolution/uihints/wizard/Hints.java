@@ -1,4 +1,4 @@
-package codes.evolution.uihints;
+package codes.evolution.uihints.wizard;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,12 +7,12 @@ import codes.evolution.uihintslib.Hint;
 
 public class Hints {
 
-    public static final @Hint.HintName String START_FLOW = "start_flow";
-    public static final @Hint.HintName String START_SECOND_WINDOW = "start_second_window";
-    public static final @Hint.HintName String FIRST_HINT = "first_hint";
-    public static final @Hint.HintName String SHOW_ADDITIONAL = "additional";
-    public static final @Hint.HintName String TEST_TEXT = "test_text";
-    public static final @Hint.HintName String FINISH_FLOW = "finish_flow";
+    public static final @Hint.Name String START_FLOW = "start_flow";
+    public static final @Hint.Name String START_SECOND_WINDOW = "start_second_window";
+    public static final @Hint.Name String FIRST_HINT = "first_hint";
+    public static final @Hint.Name String SHOW_ADDITIONAL = "additional";
+    public static final @Hint.Name String TEST_TEXT = "test_text";
+    public static final @Hint.Name String FINISH_FLOW = "finish_flow";
 
     private static final Map<String, Hint> sHints = new HashMap<String, Hint>() {
         {

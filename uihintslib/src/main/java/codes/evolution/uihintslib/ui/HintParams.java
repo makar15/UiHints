@@ -8,60 +8,50 @@ import android.view.ViewGroup;
 
 import junit.framework.Assert;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
-
-import codes.evolution.uihintslib.HintViewType;
 
 public class HintParams {
 
     private static final ShadowViewType SHADOW_DEFAULT = ShadowViewType.CIRCLE;
-    private static final @HintViewType int HINT_DEFAULT = HintViewType.STANDARD;
 
     @IntDef({Params.TARGET, Params.LAYOUT_PARAMS})
+    @Retention(RetentionPolicy.SOURCE)
     @interface Params {
         int TARGET = 1;
         int LAYOUT_PARAMS = 2;
     }
 
     private final @Params int mType;
-    private final @HintViewType int mViewType;
 
     @Nullable private WeakReference<View> mTarget;
     @Nullable private ViewGroup.LayoutParams mLayoutParams;
     @Nullable private RectF mTargetCoordinates;
+    @Nullable private View.OnClickListener mHintViewClickListener;
     private ShadowViewType mShadowType;
 
-    public HintParams(View target) {
-        this(target, SHADOW_DEFAULT, HINT_DEFAULT);
+    public HintParams(View target,
+                      @Nullable View.OnClickListener hintViewClickListener) {
+        this(target, SHADOW_DEFAULT, hintViewClickListener);
     }
 
-    public HintParams(View target, @HintViewType int viewType) {
-        this(target, SHADOW_DEFAULT, viewType);
-    }
-
-    public HintParams(View target, ShadowViewType type) {
-        this(target, type, HINT_DEFAULT);
-    }
-
-    public HintParams(View target, ShadowViewType type, @HintViewType int viewType) {
+    public HintParams(View target,
+                      ShadowViewType type,
+                      @Nullable View.OnClickListener hintViewClickListener) {
         mTarget = new WeakReference<>(target);
         mShadowType = type;
-        mViewType = viewType;
+        mHintViewClickListener = hintViewClickListener;
+
         mType = Params.TARGET;
     }
 
-    public HintParams(ViewGroup.LayoutParams params) {
-        this(params, HINT_DEFAULT);
-    }
-
-    public HintParams(@Nullable ViewGroup.LayoutParams params, @HintViewType int viewType) {
+    public HintParams(@Nullable ViewGroup.LayoutParams params,
+                      @Nullable View.OnClickListener hintViewClickListener) {
         mLayoutParams = params;
-        mViewType = viewType;
-        mType = Params.LAYOUT_PARAMS;
-    }
+        mHintViewClickListener = hintViewClickListener;
 
-    public int getHintViewType() {
-        return mViewType;
+        mType = Params.LAYOUT_PARAMS;
     }
 
     public ShadowViewType getShadowType() {
@@ -84,6 +74,11 @@ public class HintParams {
     @Nullable
     public ViewGroup.LayoutParams getLayoutParams() {
         return mLayoutParams;
+    }
+
+    @Nullable
+    public View.OnClickListener getHintViewListener() {
+        return mHintViewClickListener;
     }
 
     void setTargetCoordinates(RectF targetCoordinates) {

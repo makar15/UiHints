@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">UiHints</string>
+
+    <string name="wizard_got_it_btn">GOT IT</string>
+    <string name="wizard_start_yes_btn">YES</string>
+    <string name="wizard_start_no_btn">NO</string>
+
     <string name="show">show hints</string>
     <string name="open">open new window</string>
     <string name="first">first</string>

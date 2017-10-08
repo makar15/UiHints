@@ -5,15 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
-import codes.evolution.uihints.Hints;
 import codes.evolution.uihints.R;
 import codes.evolution.uihints.di.AppInjector;
+import codes.evolution.uihints.wizard.HintViewTypeParams;
+import codes.evolution.uihints.wizard.Hints;
 import codes.evolution.uihintslib.Flow;
 import codes.evolution.uihintslib.HintsFlowController;
 
 public class ExampleActivity extends AppCompatActivity {
 
-    @Inject HintsFlowController mHintsFlow;
+    @Inject HintsFlowController<HintViewTypeParams> mHintsFlowController;
     @Inject UiFlowNavigator mUiFlowNavigator;
 
     @Override
@@ -24,14 +25,14 @@ public class ExampleActivity extends AppCompatActivity {
         AppInjector.get().inject(this);
 
         Flow flow = new Flow(Hints.getAllHints());
-        mHintsFlow.onCreate(flow);
+        mHintsFlowController.onCreate(flow);
 
         mUiFlowNavigator.openFirstFragment();
     }
 
     @Override
     public void onDestroy() {
-        mHintsFlow.onDestroy();
+        mHintsFlowController.onDestroy();
         super.onDestroy();
     }
 }

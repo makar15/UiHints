@@ -10,7 +10,6 @@ import dagger.Component;
 @Singleton
 @Component(modules = {MainModule.class})
 public interface AppComponent {
-
     void inject(ExampleActivity exampleActivity);
     void inject(FirstFragment firstFragment);
     void inject(SecondFragment secondFragment);

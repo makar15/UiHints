@@ -9,23 +9,23 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
-import codes.evolutiom.base.Assert;
+import codes.evolution.base.Assert;
 import codes.evolution.uihintslib.ui.utils.AnimatorUtils;
 
 public abstract class WindowOverlayView {
 
     private static final String ANIMATION_NAME = "alpha";
 
+    private final Context mContext;
+    private final int mAnimationDuration;
+    private final WindowManager mWindowManager;
+
     @Nullable private View mShownView;
     @Nullable private ObjectAnimator mAnimator;
 
-    private final WindowManager mWindowManager;
-    private final int mAnimationDuration;
-    private final Context mContext;
-
     WindowOverlayView(Context context, int animationDuration) {
-        mAnimationDuration = animationDuration;
         mContext = context;
+        mAnimationDuration = animationDuration;
         mWindowManager = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE));
     }
 

@@ -15,7 +15,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
-import codes.evolution.uihintslib.Constants;
+import codes.evolution.uihintslib.AnimateSettings;
 import codes.evolution.uihintslib.ui.utils.AnimatorUtils;
 import codes.evolution.uihintslib.ui.utils.FullscreenDetector;
 import codes.evolution.uihintslib.ui.utils.UIUtils;
@@ -48,7 +48,9 @@ public class ShadowView extends View {
     private int mNumStepsToDraw = COUNT_STEPS;
 
     private enum DrawType {
+
         SHOW, HIDE;
+
         public boolean isShow() {
             return this.equals(SHOW);
         }
@@ -106,7 +108,7 @@ public class ShadowView extends View {
         if (mDrawType.isShow()) {
             mShadowAnimator.setDuration(0);
         } else {
-            mShadowAnimator.setDuration(Constants.HINTS_SHOW_ANIMATION_DURATION);
+            mShadowAnimator.setDuration(AnimateSettings.getHintsShowAnimationDuration());
         }
         mDrawType = DrawType.SHOW;
         mShadowAnimator.start();
@@ -120,7 +122,7 @@ public class ShadowView extends View {
         if (!mDrawType.isShow()) {
             mShadowAnimator.setDuration(0);
         } else {
-            mShadowAnimator.setDuration(Constants.HINTS_HIDE_ANIMATION_DURATION);
+            mShadowAnimator.setDuration(AnimateSettings.getHintsHideAnimationDuration());
         }
         mDrawType = DrawType.HIDE;
         mShadowAnimator.addListener(new AnimatorUtils.SimpleAnimatorListener() {

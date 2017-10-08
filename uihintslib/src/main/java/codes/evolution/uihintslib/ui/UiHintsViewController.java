@@ -5,8 +5,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 
-import codes.evolutiom.base.Assert;
-import codes.evolution.uihintslib.Constants;
+import codes.evolution.base.Assert;
+import codes.evolution.uihintslib.AnimateSettings;
 import codes.evolution.uihintslib.ui.utils.FullscreenDetector;
 
 public class UiHintsViewController extends WindowOverlayView {
@@ -25,7 +25,7 @@ public class UiHintsViewController extends WindowOverlayView {
     @Nullable private DecoratedHintsLayout mDecoratedHintsLayout;
 
     public UiHintsViewController(Context context, FullscreenDetector fullscreenDetector) {
-        super(context, Constants.UI_HINTS_OVERLAY_DURATION_MSC);
+        super(context, AnimateSettings.UI_HINTS_OVERLAY_DURATION_MSC);
         mFullscreenDetector = fullscreenDetector;
     }
 
@@ -36,7 +36,7 @@ public class UiHintsViewController extends WindowOverlayView {
         }
     }
 
-    public void changeTarget(@Nullable HintContainerLayout hint, HintParams params) {
+    public void changeTarget(@Nullable View hint, HintParams params) {
         Assert.assertNotNull("DecoratedHintsLayout is null Object", mDecoratedHintsLayout);
         if (mDecoratedHintsLayout != null) {
             mDecoratedHintsLayout.changeTarget(hint, params);

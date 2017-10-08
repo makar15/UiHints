@@ -8,7 +8,7 @@ import codes.evolution.uihints.R;
 
 public class UiFlowNavigator {
 
-    private static final String FRAGMENTS_BACK_STACK_KEY = "back_stack_key";
+    private static final String FRAGMENTS_BACK_STACK_KEY = "fragments_back_stack_key";
 
     private final FragmentManager mFragmentManager;
 

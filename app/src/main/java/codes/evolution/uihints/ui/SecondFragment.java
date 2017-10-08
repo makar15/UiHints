@@ -12,17 +12,14 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import codes.evolution.uihints.Hints;
 import codes.evolution.uihints.R;
 import codes.evolution.uihints.di.AppInjector;
-import codes.evolution.uihintslib.HintsItemFactory;
-import codes.evolution.uihintslib.HintsStorage;
-import codes.evolution.uihintslib.ui.HintParams;
-import codes.evolution.uihintslib.ui.ShadowViewType;
+import codes.evolution.uihints.wizard.Hints;
+import codes.evolution.uihints.wizard.WizardManager;
 
 public class SecondFragment extends Fragment {
 
-    @Inject HintsStorage mHintsStorage;
+    @Inject WizardManager mWizardManager;
 
     @Bind(R.id.btn_first_hint)
     Button mFirstHint;
@@ -34,7 +31,7 @@ public class SecondFragment extends Fragment {
     private final View.OnClickListener mOnShowAddHintClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mHintsStorage.addHint(Hints.TEST_TEXT, mLastHint);
+            mWizardManager.onReadyForShow(Hints.TEST_TEXT, mLastHint);
         }
     };
 
@@ -52,18 +49,17 @@ public class SecondFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mHintsStorage.addHint(Hints.FINISH_FLOW,
-                new HintParams(HintsItemFactory.getCenterParams(getContext())));
-        mHintsStorage.addHint(Hints.SHOW_ADDITIONAL, mShowAddHint, ShadowViewType.RECTANGLE);
-        mHintsStorage.addHint(Hints.FIRST_HINT, mFirstHint, ShadowViewType.RECTANGLE);
+        mWizardManager.onReadyForShow(Hints.FINISH_FLOW);
+        mWizardManager.onReadyForShow(Hints.SHOW_ADDITIONAL, mShowAddHint);
+        mWizardManager.onReadyForShow(Hints.FIRST_HINT, mFirstHint);
     }
 
     @Override
     public void onStop() {
-        mHintsStorage.removeHint(Hints.FIRST_HINT);
-        mHintsStorage.removeHint(Hints.SHOW_ADDITIONAL);
-        mHintsStorage.removeHint(Hints.TEST_TEXT);
-        mHintsStorage.removeHint(Hints.FINISH_FLOW);
+        mWizardManager.onRemoveFromReadyForShow(Hints.FIRST_HINT);
+        mWizardManager.onRemoveFromReadyForShow(Hints.SHOW_ADDITIONAL);
+        mWizardManager.onRemoveFromReadyForShow(Hints.TEST_TEXT);
+        mWizardManager.onRemoveFromReadyForShow(Hints.FINISH_FLOW);
         super.onStop();
     }
 }

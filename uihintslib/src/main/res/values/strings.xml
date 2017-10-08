@@ -1,6 +1,3 @@
 <resources>
     <string name="app_name">UiHintslib</string>
-    <string name="wizard_got_it_btn">GOT IT</string>
-    <string name="wizard_start_yes_btn">YES</string>
-    <string name="wizard_start_no_btn">NO</string>
 </resources>

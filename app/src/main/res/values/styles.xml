@@ -17,4 +17,76 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
+
+    <style name="LinearHintContainer">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@drawable/wizard_rectangle</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="DeviceLinearHintContainer" parent="LinearHintContainer">
+        <item name="android:layout_marginBottom">@dimen/hint_triangle_space</item>
+        <item name="android:layout_marginLeft">@dimen/hint_triangle_space</item>
+        <item name="android:layout_marginRight">@dimen/hint_triangle_space</item>
+        <item name="android:layout_marginTop">@dimen/hint_triangle_space</item>
+    </style>
+
+    <style name="TabletLinearHintContainer" parent="LinearHintContainer">
+        <item name="android:layout_marginBottom">@dimen/hint_tablet_triangle_space</item>
+        <item name="android:layout_marginLeft">@dimen/hint_tablet_triangle_space</item>
+        <item name="android:layout_marginRight">@dimen/hint_tablet_triangle_space</item>
+        <item name="android:layout_marginTop">@dimen/hint_tablet_triangle_space</item>
+    </style>
+
+    <style name="ViewsHintContainer">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="DeviceViewsHintContainer" parent="ViewsHintContainer">
+        <item name="android:layout_marginLeft">@dimen/hint_horizontal_indent</item>
+        <item name="android:layout_marginRight">@dimen/hint_horizontal_indent</item>
+        <item name="android:layout_marginTop">@dimen/hint_vertical_indent</item>
+    </style>
+
+    <style name="TabletViewsHintContainer" parent="ViewsHintContainer">
+        <item name="android:layout_marginLeft">@dimen/hint_tablet_horizontal_indent</item>
+        <item name="android:layout_marginRight">@dimen/hint_tablet_horizontal_indent</item>
+        <item name="android:layout_marginTop">@dimen/hint_tablet_vertical_indent</item>
+    </style>
+
+    <style name="HintButton">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="DeviceHintButton" parent="HintButton">
+        <item name="android:layout_width">@dimen/hint_buttons_width</item>
+        <item name="android:layout_height">@dimen/hint_buttons_height</item>
+        <item name="android:layout_marginTop">@dimen/hint_vertical_indent</item>
+        <item name="android:textSize">@dimen/hint_text_btn</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="TabletHintButton" parent="HintButton">
+        <item name="android:layout_width">@dimen/hint_tablet_buttons_width</item>
+        <item name="android:layout_height">@dimen/hint_tablet_buttons_height</item>
+        <item name="android:layout_marginTop">@dimen/hint_tablet_vertical_indent</item>
+        <item name="android:textSize">@dimen/hint_tablet_text_btn</item>
+        <item name="android:layout_marginBottom">17dp</item>
+    </style>
+
+    <style name="HintButtonsLayout">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
 </resources>

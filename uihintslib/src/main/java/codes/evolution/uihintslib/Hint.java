@@ -4,9 +4,9 @@ import android.support.annotation.Nullable;
 
 public class Hint {
 
-    private final @Hint.HintName String mName;
-    private final @Nullable @Hint.HintName String mNextHintName;
-    private final @Nullable @Hint.HintName String mPrevHintName;
+    private final @Name String mName;
+    private final @Nullable @Name String mNextHintName;
+    private final @Nullable @Name String mPrevHintName;
 
     public Hint(String name,
                 @Nullable String prevHintName,
@@ -34,5 +34,5 @@ public class Hint {
         return mName.equals(hint.getName());
     }
 
-    public @interface HintName {}
+    public @interface Name {}
 }

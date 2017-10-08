@@ -11,19 +11,15 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import codes.evolution.uihints.Hints;
 import codes.evolution.uihints.R;
 import codes.evolution.uihints.di.AppInjector;
-import codes.evolution.uihintslib.HintViewType;
-import codes.evolution.uihintslib.HintsItemFactory;
-import codes.evolution.uihintslib.HintsStorage;
-import codes.evolution.uihintslib.ui.HintParams;
-import codes.evolution.uihintslib.ui.ShadowViewType;
+import codes.evolution.uihints.wizard.Hints;
+import codes.evolution.uihints.wizard.WizardManager;
 
 public class FirstFragment extends Fragment {
 
-    @Inject HintsStorage mHintsStorage;
     @Inject UiFlowNavigator mUiFlowNavigator;
+    @Inject WizardManager mWizardManager;
 
     @Bind(R.id.btn_open)
     Button mOpen;
@@ -49,15 +45,14 @@ public class FirstFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mHintsStorage.addHint(Hints.START_FLOW,
-                new HintParams(HintsItemFactory.getCenterParams(getContext()), HintViewType.SELECTION));
-        mHintsStorage.addHint(Hints.START_SECOND_WINDOW, mOpen, ShadowViewType.RECTANGLE);
+        mWizardManager.onReadyForShow(Hints.START_FLOW);
+        mWizardManager.onReadyForShow(Hints.START_SECOND_WINDOW, mOpen);
     }
 
     @Override
     public void onStop() {
-        mHintsStorage.removeHint(Hints.START_SECOND_WINDOW);
-        mHintsStorage.removeHint(Hints.START_FLOW);
+        mWizardManager.onRemoveFromReadyForShow(Hints.START_SECOND_WINDOW);
+        mWizardManager.onRemoveFromReadyForShow(Hints.START_FLOW);
         super.onStop();
     }
 }
