@@ -7,18 +7,19 @@ import android.view.View;
 import codes.evolution.uihints.R;
 import codes.evolution.uihintslib.Hint;
 import codes.evolution.uihintslib.HintsFlowController;
+import codes.evolution.uihintslib.ui.HintParams;
 import codes.evolution.uihintslib.ui.ShadowViewType;
 
-public class HintParamsBuilder {
+public class HintParamsBuilder<ParamsType extends HintParams> {
 
     private static final String TAG = "HintParamsBuilder";
 
     private final Context mContext;
-    private final HintsFlowController<HintViewTypeParams> mHintsFlowController;
+    private final HintsFlowController<ParamsType> mHintsFlowController;
     private final View.OnClickListener mHintViewClickListener = new HintViewClickListener();
 
     public HintParamsBuilder(Context context,
-                             HintsFlowController<HintViewTypeParams> hintsFlowController) {
+                             HintsFlowController<ParamsType> hintsFlowController) {
         mContext = context;
         mHintsFlowController = hintsFlowController;
     }

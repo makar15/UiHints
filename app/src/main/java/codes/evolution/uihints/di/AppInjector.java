@@ -8,7 +8,7 @@ public class AppInjector {
 
     public static void buildComponent(FragmentActivity activity) {
         mAppComponent = DaggerAppComponent.builder()
-                .mainModule(new MainModule(activity))
+                .wizardTypeParamsModule(new WizardTypeParamsModule(activity))
                 .build();
     }
 

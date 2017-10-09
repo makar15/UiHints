@@ -20,7 +20,7 @@ public class HintsFlowController<ParamsType extends HintParams> {
     private static final String TAG = "HintsFlowController";
 
     private final HintsStorage<ParamsType> mHintsStorage;
-    private final HintsViewFactory<ParamsType> mHintsViewFactory;
+    private final HintsViewFactory mHintsViewFactory;
     private final UiHintsViewController mUiHintsViewController;
     private final Handler mUiHandler;
 
@@ -68,7 +68,7 @@ public class HintsFlowController<ParamsType extends HintParams> {
 
     public HintsFlowController(Context context,
                                HintsStorage<ParamsType> hintsStorage,
-                               HintsViewFactory<ParamsType> hintsViewFactory) {
+                               HintsViewFactory hintsViewFactory) {
         mHintsStorage = hintsStorage;
         mHintsViewFactory = hintsViewFactory;
 

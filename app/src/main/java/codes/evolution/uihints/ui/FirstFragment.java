@@ -13,13 +13,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import codes.evolution.uihints.R;
 import codes.evolution.uihints.di.AppInjector;
+import codes.evolution.uihints.wizard.HintViewTypeParams;
 import codes.evolution.uihints.wizard.Hints;
 import codes.evolution.uihints.wizard.WizardManager;
 
 public class FirstFragment extends Fragment {
 
     @Inject UiFlowNavigator mUiFlowNavigator;
-    @Inject WizardManager mWizardManager;
+    @Inject WizardManager<HintViewTypeParams> mWizardManager;
 
     @Bind(R.id.btn_open)
     Button mOpen;

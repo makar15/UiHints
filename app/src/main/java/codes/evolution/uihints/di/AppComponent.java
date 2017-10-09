@@ -8,7 +8,7 @@ import codes.evolution.uihints.ui.SecondFragment;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {MainModule.class})
+@Component(modules = {WizardTypeParamsModule.class})
 public interface AppComponent {
     void inject(ExampleActivity exampleActivity);
     void inject(FirstFragment firstFragment);

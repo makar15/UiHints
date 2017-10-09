@@ -5,14 +5,15 @@ import android.view.View;
 
 import codes.evolution.uihintslib.Hint;
 import codes.evolution.uihintslib.HintsStorage;
+import codes.evolution.uihintslib.ui.HintParams;
 
-public class WizardManager {
+public class WizardManager<ParamsType extends HintParams> {
 
-    private final HintsStorage<HintViewTypeParams> mHintsStorage;
-    private final HintParamsBuilder mHintParamsBuilder;
+    private final HintsStorage<ParamsType> mHintsStorage;
+    private final HintParamsBuilder<ParamsType> mHintParamsBuilder;
 
-    public WizardManager(HintsStorage<HintViewTypeParams> hintsStorage,
-                         HintParamsBuilder hintParamsBuilder) {
+    public WizardManager(HintsStorage<ParamsType> hintsStorage,
+                         HintParamsBuilder<ParamsType> hintParamsBuilder) {
         mHintsStorage = hintsStorage;
         mHintParamsBuilder = hintParamsBuilder;
     }
@@ -22,7 +23,7 @@ public class WizardManager {
     }
 
     public void onReadyForShow(@Hint.Name String hintName, @Nullable View target) {
-        mHintsStorage.addHint(hintName, mHintParamsBuilder.get(hintName, target));
+        mHintsStorage.addHint(hintName, (ParamsType) mHintParamsBuilder.get(hintName, target));
     }
 
     public void onRemoveFromReadyForShow(@Hint.Name String hintName) {

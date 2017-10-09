@@ -14,12 +14,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import codes.evolution.uihints.R;
 import codes.evolution.uihints.di.AppInjector;
+import codes.evolution.uihints.wizard.HintViewTypeParams;
 import codes.evolution.uihints.wizard.Hints;
 import codes.evolution.uihints.wizard.WizardManager;
 
 public class SecondFragment extends Fragment {
 
-    @Inject WizardManager mWizardManager;
+    @Inject WizardManager<HintViewTypeParams> mWizardManager;
 
     @Bind(R.id.btn_first_hint)
     Button mFirstHint;

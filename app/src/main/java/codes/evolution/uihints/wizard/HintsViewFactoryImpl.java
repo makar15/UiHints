@@ -20,17 +20,17 @@ public class HintsViewFactoryImpl implements HintsViewFactory<HintViewTypeParams
     private static final String MESSAGE_PREF = "hint_message_";
 
     private final Context mContext;
-    private final LayoutInflater mInflater;
 
     public HintsViewFactoryImpl(Context context) {
         mContext = context;
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public View createHintView(@Hint.Name String hintName,
                                HintViewTypeParams params) {
-        HintContainerLayout hintView = (HintContainerLayout) mInflater.inflate(R.layout.hint_view, null, false);
+        HintContainerLayout hintView = (HintContainerLayout) LayoutInflater
+                        .from(mContext)
+                        .inflate(R.layout.hint_view, null, false);
         ViewGroup hintContainer = (ViewGroup) hintView.findViewById(R.id.hint_fields_layout);
         TextView title = (TextView) hintContainer.findViewById(R.id.title);
         setHintTextFromResources(title, TITLE_PREF + hintName);
@@ -64,7 +64,7 @@ public class HintsViewFactoryImpl implements HintsViewFactory<HintViewTypeParams
     }
 
     private View addViewToContainer(int resource, ViewGroup hintContainer) {
-        View view = mInflater.inflate(resource, null);
+        View view = LayoutInflater.from(mContext).inflate(resource, null);
         hintContainer.addView(view);
         return view;
     }
