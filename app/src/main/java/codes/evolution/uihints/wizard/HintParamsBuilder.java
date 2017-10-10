@@ -2,6 +2,7 @@ package codes.evolution.uihints.wizard;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import codes.evolution.uihints.R;
@@ -51,26 +52,16 @@ public class HintParamsBuilder<ParamsType extends HintParams> {
     private class HintViewClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            Hint hint = mHintsFlowController.getCurrentShownHint();
-            if (hint == null) {
-                throw new AssertionError("Current hint should be shown");
-            }
-
-            //TODO temp comments
-            /*Assert.assertNotNull(mFlow);
-            if (mFlow == null) {
-                Log.e(TAG, "Flow is null Object");
-                return;
-            }
-            mFlow.remove(mCurHint);*/
-
-            int i = view.getId();
-            if (i == R.id.yes) {
-                mHintsFlowController.startNextIfNeeded();
-            } else if (i == R.id.no) {
-                mHintsFlowController.exitWizard();
-            } else if (i == R.id.got_it) {
-                mHintsFlowController.startNextIfNeeded();
+            switch (view.getId()) {
+                case R.id.yes:
+                case R.id.got_it:
+                    mHintsFlowController.showNextHint();
+                    break;
+                case R.id.no:
+                    mHintsFlowController.destroy();
+                    break;
+                default:
+                    Log.e(TAG, "View with" + view.getId() + " dosn't exist");
             }
         }
     }

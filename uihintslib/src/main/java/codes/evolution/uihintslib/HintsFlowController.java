@@ -77,34 +77,18 @@ public class HintsFlowController<ParamsType extends HintParams> {
         mUiHandler = new Handler(Looper.getMainLooper());
     }
 
-    public void onCreate(Flow flow) {
+    public void create(Flow flow) {
         Assert.assertNotNull(flow);
         if (flow == null) {
             Log.e(TAG, "Flow is null Object");
             return;
         }
         mHintsStorage.addListener(mStorageListener);
-        restoreFlow(flow);
+        mFlow = new Flow(flow.getHints());
+        Log.d(TAG, "On create Wizard");
     }
 
-    public void onDestroy() {
-        mHintsStorage.removeListener(mStorageListener);
-        mFlow = null;
-    }
-
-    @SuppressWarnings("all")
-    public void startNextIfNeeded() {
-        String nextHintName = mCurrentHint.getNextHintName();
-        if (nextHintName != null) {
-            Hint hint = mFlow.getHint(nextHintName);
-            showHint(hint);
-            return;
-        }
-        hideHintWithAnimation();
-    }
-
-    public void exitWizard() {
-        Assert.assertNotNull(mFlow);
+    public void destroy() {
         if (mFlow != null) {
             mFlow.clear();
             mFlow = null;
@@ -113,10 +97,27 @@ public class HintsFlowController<ParamsType extends HintParams> {
         mHintsStorage.removeAllHints();
         mUiHandler.removeCallbacksAndMessages(null);
         mHintsStorage.removeListener(mStorageListener);
+        Log.d(TAG, "On destroy Wizard");
     }
 
-    public Hint getCurrentShownHint() {
-        return mCurrentHint;
+    @SuppressWarnings("all")
+    public void showNextHint() {
+        Assert.assertNotNull(mFlow);
+        Assert.assertNotNull(mCurrentHint);
+        if (mFlow == null) {
+            Log.e(TAG, "Flow or CurrentHint should not be null");
+            return;
+        }
+        mFlow.remove(mCurrentHint);
+
+        String nextHintName = mCurrentHint.getNextHintName();
+        if (nextHintName != null) {
+            Hint hint = mFlow.getHint(nextHintName);
+            showHint(hint);
+        } else {
+            Log.w(TAG, "Next hint dosn't exist");
+            hideHintWithAnimation();
+        }
     }
 
     private void showHintWithDelay(final Hint hint, int delay) {
@@ -137,7 +138,7 @@ public class HintsFlowController<ParamsType extends HintParams> {
 
         ParamsType params = mHintsStorage.getHintParams(hint.getName());
         if (params == null || isHintShown(hint.getName())) {
-            Log.d(TAG, "Object params is null or " + hint + " was shown");
+            Log.d(TAG, "Object params is null or " + hint.getName() + " was shown");
             hideHintWithAnimation();
             return;
         }
@@ -145,6 +146,7 @@ public class HintsFlowController<ParamsType extends HintParams> {
         mCurrentHint = hint;
         View hintView = mHintsViewFactory.createHintView(hint.getName(), params);
 
+        Log.d(TAG, "On show hint : " + hint.getName());
         mUiHintsViewController.show();
         mUiHintsViewController.changeTarget(hintView, params);
     }
@@ -162,8 +164,10 @@ public class HintsFlowController<ParamsType extends HintParams> {
             return;
         }
 
+        final String hintName = mCurrentHint != null ? mCurrentHint.getName() : "";
         mCurrentHint = null;
         if (!animation) {
+            Log.d(TAG, "On hide hint : " + hintName);
             mUiHintsViewController.hide();
             return;
         }
@@ -172,6 +176,7 @@ public class HintsFlowController<ParamsType extends HintParams> {
             @Override
             public void run() {
                 if (mUiHintsViewController.isShown()) {
+                    Log.d(TAG, "On hide hint : " + hintName);
                     mUiHintsViewController.hide();
                 }
             }
@@ -180,9 +185,5 @@ public class HintsFlowController<ParamsType extends HintParams> {
 
     private boolean isHintShown(@Hint.Name String hintName) {
         return mFlow != null && !mFlow.contains(hintName);
-    }
-
-    private void restoreFlow(Flow flow) {
-        mFlow = new Flow(flow.getHints());
     }
 }

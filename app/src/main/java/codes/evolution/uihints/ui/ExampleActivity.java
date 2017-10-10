@@ -25,14 +25,14 @@ public class ExampleActivity extends AppCompatActivity {
         AppInjector.get().inject(this);
 
         Flow flow = new Flow(Hints.getAllHints());
-        mHintsFlowController.onCreate(flow);
+        mHintsFlowController.create(flow);
 
         mUiFlowNavigator.openFirstFragment();
     }
 
     @Override
     public void onDestroy() {
-        mHintsFlowController.onDestroy();
+        mHintsFlowController.destroy();
         super.onDestroy();
     }
 }

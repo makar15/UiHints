@@ -76,7 +76,7 @@ public class HintsViewFactoryImpl implements HintsViewFactory<HintViewTypeParams
     public static FrameLayout.LayoutParams getCenterParams(Context context) {
         int screenWidth = UIUtils.getScreenWidth();
         int defaultWidth = context.getResources().getDimensionPixelSize(R.dimen.hint_container_width);
-        boolean isTablet = context.getResources().getBoolean(codes.evolution.uihintslib.R.bool.is_tablet);
+        boolean isTablet = context.getResources().getBoolean(R.bool.is_tablet);
 
         int width = isTablet ? (defaultWidth * 2) : screenWidth;
         return new FrameLayout.LayoutParams(width, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
