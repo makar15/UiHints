@@ -17,34 +17,51 @@ public class HintParamsBuilder<ParamsType extends HintParams> {
 
     private final Context mContext;
     private final HintsFlowController<ParamsType> mHintsFlowController;
+    private final HintParamsGenericCreator<ParamsType> mHintParamsGenericCreator;
     private final View.OnClickListener mHintViewClickListener = new HintViewClickListener();
 
     public HintParamsBuilder(Context context,
-                             HintsFlowController<ParamsType> hintsFlowController) {
+                             HintsFlowController<ParamsType> hintsFlowController,
+                             HintParamsGenericCreator<ParamsType> hintParamsGenericCreator) {
         mContext = context;
         mHintsFlowController = hintsFlowController;
+        mHintParamsGenericCreator = hintParamsGenericCreator;
     }
 
     @Nullable
-    public HintViewTypeParams get(@Hint.Name String hintName, @Nullable View target) {
-        HintViewTypeParams params = null;
-        switch (hintName) {
-            case Hints.START_FLOW:
-                params = new HintViewTypeParams(HintsViewFactoryImpl.getCenterParams(mContext),
-                        mHintViewClickListener, HintViewType.SELECTION);
-                break;
-            case Hints.FINISH_FLOW:
-                params = new HintViewTypeParams(HintsViewFactoryImpl.getCenterParams(mContext),
-                        mHintViewClickListener);
-                break;
-            case Hints.START_SECOND_WINDOW:
-            case Hints.SHOW_ADDITIONAL:
-            case Hints.FIRST_HINT:
-                params = new HintViewTypeParams(target, ShadowViewType.RECTANGLE, mHintViewClickListener);
-                break;
-            case Hints.TEST_TEXT:
-                params = new HintViewTypeParams(target, mHintViewClickListener);
-                break;
+    public ParamsType get(@Hint.Name String hintName, @Nullable View target) {
+        ParamsType params = null;
+
+        try {
+            switch (hintName) {
+                case Hints.START_FLOW:
+                    params = mHintParamsGenericCreator.get(
+                            HintsViewFactoryImpl.getCenterParams(mContext),
+                            mHintViewClickListener,
+                            HintViewType.SELECTION);
+                    break;
+                case Hints.FINISH_FLOW:
+                    params = mHintParamsGenericCreator.get(
+                            HintsViewFactoryImpl.getCenterParams(mContext),
+                            mHintViewClickListener);
+                    break;
+                case Hints.START_SECOND_WINDOW:
+                case Hints.SHOW_ADDITIONAL:
+                case Hints.FIRST_HINT:
+                    params = mHintParamsGenericCreator.get(
+                            target,
+                            ShadowViewType.RECTANGLE,
+                            mHintViewClickListener);
+                    break;
+                case Hints.TEST_TEXT:
+                    params = mHintParamsGenericCreator.get(
+                            target,
+                            mHintViewClickListener);
+                    break;
+            }
+        } catch (ReflectiveOperationException e) {
+            Log.e(TAG, "Object ParamsType type failed to create. The type is not valid and doesn't " +
+                    "have a constructor with the requested parameters", e);
         }
         return params;
     }

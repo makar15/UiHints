@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 
 import codes.evolution.uihints.ui.UiFlowNavigator;
 import codes.evolution.uihints.wizard.HintParamsBuilder;
+import codes.evolution.uihints.wizard.HintParamsGenericCreator;
 import codes.evolution.uihints.wizard.HintsViewFactoryImpl;
 import codes.evolution.uihints.wizard.WizardManager;
 import codes.evolution.uihintslib.HintsFlowController;
@@ -34,7 +35,7 @@ abstract class WizardModule<ParamsType extends HintParams> {
     @Provides
     @Singleton
     HintParamsBuilder<ParamsType> provideHintParamsBuilder(HintsFlowController<ParamsType> hintsFlowController) {
-        return new HintParamsBuilder<>(mActivity, hintsFlowController);
+        return new HintParamsBuilder<>(mActivity, hintsFlowController, getHintParamsGenericCreator());
     }
 
     @Provides
@@ -62,4 +63,6 @@ abstract class WizardModule<ParamsType extends HintParams> {
     HintsViewFactory provideHintsViewFactory() {
         return new HintsViewFactoryImpl(mActivity);
     }
+
+    public abstract <P extends ParamsType> HintParamsGenericCreator<P> getHintParamsGenericCreator();
 }

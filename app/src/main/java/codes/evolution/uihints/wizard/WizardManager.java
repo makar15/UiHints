@@ -23,7 +23,7 @@ public class WizardManager<ParamsType extends HintParams> {
     }
 
     public void onReadyForShow(@Hint.Name String hintName, @Nullable View target) {
-        mHintsStorage.addHint(hintName, (ParamsType) mHintParamsBuilder.get(hintName, target));
+        mHintsStorage.addHint(hintName, mHintParamsBuilder.get(hintName, target));
     }
 
     public void onRemoveFromReadyForShow(@Hint.Name String hintName) {

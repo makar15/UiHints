@@ -27,5 +27,5 @@
     <string name="hint_message_test_text">This button is needed to</string>
 
     <string name="hint_title_finish_flow">Finish flow</string>
-    <string name="hint_message_finish_flow">Bye!</string>
+    <string name="hint_message_finish_flow">See you soon!, See you later!</string>
 </resources>
